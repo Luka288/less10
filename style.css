@@ -25,6 +25,7 @@ main {
   width: 400px;
   height: auto;
   max-height: 300px;
+  border: 1px solid black;
   display: none;
   overflow: scroll;
   overflow-x: hidden;
@@ -49,7 +50,8 @@ main {
 }
 
 .item:hover {
-  background-color: white;
+  color: white;
+  background-color: #01459e;
   transition: all 0.5s;
 }
 
