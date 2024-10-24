@@ -79,29 +79,48 @@ function searchEngine(searchItem) {
   }
 }
 
-function getInfo() {
-  fetch(
-    "https://api.everrest.educata.dev/shop/products/all?page_index=1&page_size=50",
-    {
-      method: "GET",
+async function getInfo() {
+  const response = await fetch(
+    "https://api.everrest.educata.dev/shop/products/all?page_index=1&page_size=50"
+  );
+
+  try {
+    if (!response.ok) {
+      throw new Error("Error");
     }
-  )
-    .then((res) => res.json())
-    .then((res) => {
-      console.log(res);
-      res.products.forEach((products) => {
-        const li = document.createElement("li");
-        const img = document.createElement("img");
-        const p = document.createElement("p");
-        li.classList.add("item");
-        img.src = products.thumbnail;
-        li.classList.add("searchItem");
-        p.textContent = `${products.title}`;
-        li.appendChild(img);
-        li.appendChild(p);
-        searchProduct.push(li);
-      });
+    const parseRes = await response.json();
+
+    parseRes.products.forEach((products) => {
+      const li = document.createElement("li");
+      const img = document.createElement("img");
+      const p = document.createElement("p");
+      li.classList.add("item");
+      img.src = products.thumbnail;
+      li.classList.add("searchItem");
+      p.textContent = `${products.title}`;
+      li.appendChild(img);
+      li.appendChild(p);
+      searchProduct.push(li);
     });
+  } catch (err) {
+    console.log(err);
+  }
 }
+// .then((res) => res.json())
+// .then((res) => {
+//   console.log(res);
+//   res.products.forEach((products) => {
+//     const li = document.createElement("li");
+//     const img = document.createElement("img");
+//     const p = document.createElement("p");
+//     li.classList.add("item");
+//     img.src = products.thumbnail;
+//     li.classList.add("searchItem");
+//     p.textContent = `${products.title}`;
+//     li.appendChild(img);
+//     li.appendChild(p);
+//     searchProduct.push(li);
+//   });
+// });
 
 getInfo();
